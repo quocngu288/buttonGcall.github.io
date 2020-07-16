@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <%- include('base/plugins') -%>
+    <title>Click-to-call Button Management</title>
+    <style>
+        .error {
+            color: red;
+        }
+
+        .label {
+            font-size: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="page-container">
+        <main id="main-container">
+            <div class="content bg-gray-lighter">
+                <div class="row items-push">
+                    <div class="col-sm-7">
+                        <h1 class="page-heading">Click-to-call Button Management</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="block">
+                    <div class="block-content">
+                        <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="block block-themed block-transparent remove-margin-b">
+                                        <div class="block-header bg-primary-dark">
+                                            <ul class="block-options">
+                                                <li>
+                                                    <button data-dismiss="modal" type="button">
+                                                        <i class="si si-close"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <h3 class="block-title">Are you sure you want to delete this button?</h3>
+                                        </div>
+                                        <div class="block-content">
+                                            <input type="text" style="display: none;" id="delete-id">
+                                            <input type="text" style="display: none;" id="delete-callcenter">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-sm btn-primary" type="button"
+                                            id="delete-button">Yes</button>
+                                        <button class="btn btn-sm btn-default" type="button"
+                                            data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="update-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="block block-themed block-transparent remove-margin-b">
+                                        <div class="block-header bg-primary-dark">
+                                            <ul class="block-options">
+                                                <li>
+                                                    <button data-dismiss="modal" type="button">
+                                                        <i class="si si-close"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <h3 class="block-title">Update a button</h3>
+                                        </div>
+                                        <div class="block-content">
+                                            <div class="form-horizontal push-10-t">
+                                                <input type="text" style="display: none;" id="update-id">
+                                                <input type="text" style="display: none;" id="update-callcenter">
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-extension">Extension</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="update-extension">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-domain">Domain</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="update-domain">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-password">Password</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="update-password">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-proxy">Proxy</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="update-proxy">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-websocket">Websocket</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="update-websocket">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" for="update-delay">Delay
+                                                        (seconds)</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="number" id="update-delay">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-header">Header</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="update-header">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-content">Content</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="update-content">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-position">Position</label>
+                                                    <div class="col-md-7">
+                                                        <select class="form-control" id="update-position">
+                                                            <option value="bottom-right">Bottom right</option>
+                                                            <option value="bottom-left">Bottom left</option>
+                                                            <option value="bottom-center">Bottom center</option>
+                                                            <option value="middle-right">Middle right</option>
+                                                            <option value="middle-left">Middle left</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-color">Color</label>
+                                                    <div class="col-md-7">
+                                                        <input class="js-colorpicker form-control colorpicker-element"
+                                                            type="text" id="update-color">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-destination">Destination</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="update-destination">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="update-activated">Activated</label>
+                                                    <div class="col-md-7">
+                                                        <select class="form-control" id="update-activated">
+                                                            <option value="true">True</option>
+                                                            <option value="false">False</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label error"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-sm btn-primary" type="button"
+                                            id="update-button">Submit</button>
+                                        <button class="btn btn-sm btn-default" type="button"
+                                            data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="block block-themed block-transparent remove-margin-b">
+                                        <div class="block-header bg-primary-dark">
+                                            <ul class="block-options">
+                                                <li>
+                                                    <button data-dismiss="modal" type="button">
+                                                        <i class="si si-close"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <h3 class="block-title">Create a button</h3>
+                                        </div>
+                                        <div class="block-content">
+                                            <div class="form-horizontal push-10-t">
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" for="create-email">Email of
+                                                        tenant</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="email" id="create-email">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-extension">Extension</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="create-extension">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-domain">Domain</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="create-domain">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-password">Password</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="create-password">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-proxy">Proxy</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="create-proxy">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-websocket">Websocket</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="create-websocket">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label" for="create-delay">Delay
+                                                        (seconds)</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="number" id="create-delay"
+                                                            value="0">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-header">Header</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="create-header"
+                                                            value="Support">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-content">Content</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="create-content"
+                                                            value="Do you need support? Call us now!">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-position">Position</label>
+                                                    <div class="col-md-7">
+                                                        <select class="form-control" id="create-position">
+                                                            <option value="bottom-right">Bottom right</option>
+                                                            <option value="bottom-left">Bottom left</option>
+                                                            <option value="bottom-center">Bottom center</option>
+                                                            <option value="middle-right">Middle right</option>
+                                                            <option value="middle-left">Middle left</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-color">Color</label>
+                                                    <div class="col-md-7">
+                                                        <input class="js-colorpicker form-control colorpicker-element"
+                                                            type="text" id="create-color" value="#fff">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-destination">Destination</label>
+                                                    <div class="col-md-7">
+                                                        <input class="form-control" type="text" id="create-destination">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-3 control-label"
+                                                        for="create-activated">Activated</label>
+                                                    <div class="col-md-7">
+                                                        <select class="form-control" id="create-activated">
+                                                            <option value="true">True</option>
+                                                            <option value="false">False</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-6 control-label error"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-sm btn-primary" type="button"
+                                            id="create-button">Submit</button>
+                                        <button class="btn btn-sm btn-default" type="button"
+                                            data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="view-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="block block-themed block-transparent remove-margin-b">
+                                        <div class="block-header bg-primary-dark">
+                                            <ul class="block-options">
+                                                <li>
+                                                    <button data-dismiss="modal" type="button">
+                                                        <i class="si si-close"></i>
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <h3 class="block-title">Get a button script</h3>
+                                        </div>
+                                        <div class="block-content">
+                                            <pre class="pre-sh"><code></code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-sm btn-default" type="button"
+                                            data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success push-5-r push-10" type="button" data-toggle="modal"
+                            data-target="#create-modal">
+                            <i class="fa fa-plus"></i> Create a button
+                        </button>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-header-bg table-vcenter">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%;">ID</th>
+                                        <th style="width: 5%;">Callcenter</th>
+                                        <th style="width: 5%;">Extension</th>
+                                        <th style="width: 5%;">Domain</th>
+                                        <th style="width: 5%;">Password</th>
+                                        <th style="width: 5%;">Proxy</th>
+                                        <th style="width: 10%;">Websocket</th>
+                                        <th style="width: 5%;">Delay (seconds)</th>
+                                        <th style="width: 10%;">Header</th>
+                                        <th style="width: 15%;">Content</th>
+                                        <th style="width: 5%;">Position</th>
+                                        <th style="width: 5%;">Color</th>
+                                        <th style="width: 5%;">Destination</th>
+                                        <th style="width: 5%;">Activated</th>
+                                        <th style="width: 5%;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%  list.forEach(function (item) { %>
+                                    <tr id="<%=item._id%>">
+                                        <td>
+                                            <%=item._id%>
+                                        </td>
+                                        <td>
+                                            <%=item.idCallcenter%>
+                                        </td>
+                                        <td>
+                                            <%=item.extension%>
+                                        </td>
+                                        <td>
+                                            <%=item.domain%>
+                                        </td>
+                                        <td>
+                                            <%=item.password%>
+                                        </td>
+                                        <td>
+                                            <%=item.proxy%>
+                                        </td>
+                                        <td>
+                                            <%=item.websocket%>
+                                        </td>
+                                        <td>
+                                            <%=item.delay%>
+                                        </td>
+                                        <td>
+                                            <%=item.header%>
+                                        </td>
+                                        <td>
+                                            <%=item.content%>
+                                        </td>
+                                        <td>
+                                            <%=item.position%>
+                                        </td>
+                                        <td>
+                                            <%=item.color%>
+                                        </td>
+                                        <td>
+                                            <%=item.destination%>
+                                        </td>
+                                        <td>
+                                            <% if (item.activated){ %>
+                                            <span class="label label-success">True</span>
+                                            <% } else {%>
+                                            <span class="label label-error">False</span>
+                                            <% } %>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-xs btn-info" type="button" data-toggle="tooltip"
+                                                    title="View">
+                                                    <i class="fa fa-file-text-o"></i>
+                                                </button>
+                                                <button class="btn btn-xs btn-default" type="button"
+                                                    data-toggle="tooltip" title="Edit">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-xs btn-danger" type="button"
+                                                    data-toggle="tooltip" title="Remove">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        var host = '<%=host%>';
+    </script>
+    <script type='text/javascript' src='/js/index.js'></script>
+    <!-- <script src="https://button.gcall.vn/button/5b838bc4fa2c96561d53316d"></script> -->
+    <script src="/button"></script>
+</body>
+
+</html>

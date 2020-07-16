@@ -1,0 +1,299 @@
+@font-face {
+    font-family: "OpenSans Semibold";
+    src: url('/fonts/OpenSans/OpenSans-Semibold.ttf');
+}
+
+@font-face {
+    font-family: "OpenSans Bold";
+    src: url('/fonts/OpenSans/OpenSans-Bold.ttf');
+}
+
+@font-face {
+    font-family: "OpenSans Regular";
+    src: url('/fonts/OpenSans/OpenSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: "OpenSans Italic";
+    src: url('/fonts/OpenSans/OpenSans-Italic.ttf');
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(2deg);
+    }
+    50% {
+        transform: rotate(-3deg);
+    }
+    70% {
+        transform: rotate(3deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes textflow {
+    from {
+        left: 100%;
+        transform: translateX(0);
+    }
+    to {
+        left: 0;
+        transform: translateX(-100%);
+    }
+}
+
+.make-it-flow {
+    animation: textflow 6s linear 100ms infinite normal none;
+}
+
+.smart-gcalls {
+    position: fixed;
+    /* padding: 5px 12px; */
+    margin: 5px;
+    font-size: 15px;
+    border-radius: 100%;
+    background-image: url(../img/call-logo.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 36px;
+    height: 36px;
+    box-shadow: 0 1px 20px 0 #788188;
+    cursor: pointer;
+}
+
+.smart-gcalls.bottom-right {
+    right: 110px;
+    bottom: 35px;
+}
+
+.smart-gcalls.bottom-left {
+    left: 110px;
+    bottom: 35px;
+}
+
+.smart-gcalls.bottom-center {
+    left: 50%;
+    bottom: 35px;
+    transform: translateX(-50%);
+}
+
+.smart-gcalls.center-right {
+    right: 110px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.smart-gcalls.center-left {
+    left: 110px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* .smart-gcalls.center-left::after,
+.smart-gcalls.bottom-left::after {
+	left: -66px;
+}
+
+.smart-gcalls.center-right::after,
+.smart-gcalls.bottom-right::after,
+.smart-gcalls.bottom-center::after {
+	right: -70px;
+}
+
+.smart-gcalls:hover::before,
+.smart-gcalls:hover::after {
+	animation: shake 500ms ease-in-out forwards;
+}
+
+.smart-gcalls.hover::before,
+.smart-gcalls.hover::after {
+	opacity: 1;
+	transform: translateY(-2px);
+}
+
+.smart-gcalls.hover::after {
+	height: auto;
+	padding: 10px;
+}
+
+.smart-gcalls:before,
+.smart-gcalls:after {
+	position: absolute;
+	content: '';
+	opacity: 0;
+	transition: all 0.4s ease;
+}
+
+.smart-gcalls:before {
+	border-width: 10px 8px 0 8px;
+	border-style: solid;
+	border-color: #f9fafe transparent transparent transparent;
+	top: -10px;
+	transform: translateY(20px);
+	z-index: 100;
+	left: 10px;
+}
+
+.smart-gcalls:after {
+	content: attr(data-tooltip);
+	background: #f9fafe;
+	max-width: 180px;
+	width: max-content;
+	font-size: 13px;
+	font-weight: 300;
+	bottom: 44px;
+	padding: 0;
+	border-radius: 5px;
+	letter-spacing: 1px;
+	transform: translateY(20px);
+	box-shadow: 0 1px 10px 0 #cdced2;
+	height: 0;
+	overflow: hidden;
+}
+
+.smart-gcalls:hover::before,
+.smart-gcalls:hover::after {
+	opacity: 1;
+	transform: translateY(-2px);
+}
+
+.smart-gcalls:hover::after {
+	height: auto;
+	padding: 10px;
+} */
+
+.smart-gcalls-tooltip {
+    visibility: hidden;
+    max-width: 180px;
+    width: max-content;
+    text-align: center;
+    font-weight: bold;
+    padding: 5px;
+    position: absolute;
+    background: #f9fafe;
+    z-index: 1;
+    bottom: 44px;
+    margin-left: -70px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    transform: translateY(20px);
+    box-shadow: 0 1px 10px 0 #cdced2;
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.smart-gcalls.hover::before, .smart-gcalls:hover::before {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.smart-gcalls:before {
+    position: absolute;
+    content: '';
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.smart-gcalls:before {
+    border-width: 10px 8px 0 8px;
+    border-style: solid;
+    border-color: #f9fafe transparent transparent transparent;
+    top: -10px;
+    transform: translateY(20px);
+    z-index: 100;
+    left: 10px;
+}
+
+.smart-gcalls:hover::before {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.smart-gcalls.hover .smart-gcalls-tooltip, .smart-gcalls:hover .smart-gcalls-tooltip {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.tooltip-header {
+    font-size: 18px;
+    background-color: #8b53d1;
+    color: #f9fafe;
+    margin: 0 auto;
+    max-width: 80%;
+    left: 20%;
+}
+
+.tooltip-content {
+    font-size: 13px;
+    color: black;
+    margin-bottom: 0;
+}
+
+.callbox-gcalls {
+    width: 138px;
+    height: 34.8px;
+    border-radius: 17.4px;
+    background: linear-gradient(76deg, #8b53d1, #6253dd);
+    /* padding: 6.2px; */
+    position: fixed;
+    bottom: 40px;
+    right: 125px;
+    padding-left: 20px;
+    transform: scale(1.5);
+    box-shadow: 0 1px 20px 0 #788188;
+}
+
+.callbox-gcalls .info {
+    display: inline-block;
+    width: 80%;
+    font-family: 'OpenSans Regular';
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: #ffffff;
+    overflow: hidden;
+}
+
+.callbox-gcalls .name {
+    font-size: 10px;
+    margin: 0;
+    margin-bottom: 2px;
+}
+
+.callbox-gcalls .name p {
+    margin: 0;
+    padding: 0;
+    color: #ffffff;
+    white-space: nowrap;
+    width: fit-content;
+    position: relative;
+}
+
+.callbox-gcalls .status {
+    opacity: 0.8;
+    /* font-size: 7px; */
+    font-size: 10px;
+    margin: 0;
+}
+
+.callbox-gcalls .hangup {
+    background-image: url(../img/call-end.png);
+    width: 18px;
+    height: 18px;
+    background-color: #e91e63;
+    border: none;
+    background-size: 72%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
